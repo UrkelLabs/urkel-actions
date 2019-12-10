@@ -1,0 +1,21 @@
+{
+  "name": "yarn-audit",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Yarn Audit, then a PR",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "actions-toolkit": "^1.2.0",
+    "dedent": "^0.7.0",
+    "execa": "^1.0.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}
