@@ -7,11 +7,16 @@ module.exports = async tools => {
     // Try to parse the result as actual JSON
     // const summary = JSON.parse(result.stdout.pop());
     const data = result.stdout.split("\n");
-      console.log(data);
-    const summary = JSON.parse(data[data.length - 2]);
+
+    const summary = data.filter(str => {
+      if (str.includes("auditSummary")) {
+        return JSON.parse(str);
+      }
+    });
+    // const summary = JSON.parse(data[data.length - 2]);
     // const json = JSON.parse(result.stdout);
     // const vulns = json.metadata.vulnerabilities
-    const vulns = summary.data.vulnerabilities;
+    const vulns = summary[0].data.vulnerabilities;
 
     // Get the total count of vulnerabilities
     const keys = Object.keys(vulns);
