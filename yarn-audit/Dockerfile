@@ -12,6 +12,6 @@ LABEL "maintainer"="Urkel Labs Engineering <engineering@urkellabs.com>"
 COPY package*.json /
 COPY . .
 
-RUN npm ci
+RUN yarn
 
 ENTRYPOINT ["node", "/index.js"]
