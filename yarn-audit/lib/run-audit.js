@@ -7,6 +7,7 @@ module.exports = async tools => {
     // Try to parse the result as actual JSON
     // const summary = JSON.parse(result.stdout.pop());
     const data = result.stdout.split("\n");
+      console.log(data);
     const summary = JSON.parse(data[data.length - 2]);
     // const json = JSON.parse(result.stdout);
     // const vulns = json.metadata.vulnerabilities
