@@ -16,7 +16,8 @@ module.exports = async tools => {
     // const summary = JSON.parse(data[data.length - 2]);
     // const json = JSON.parse(result.stdout);
     // const vulns = json.metadata.vulnerabilities
-    const vulns = summary[0].data.vulnerabilities;
+    const summaryJSON = JSON.parse(summary[0]);
+    const vulns = summaryJSON.data.vulnerabilities;
 
     // Get the total count of vulnerabilities
     const keys = Object.keys(vulns);
