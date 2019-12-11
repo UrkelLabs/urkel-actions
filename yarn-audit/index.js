@@ -20,7 +20,7 @@ async function run() {
     // const fixResult = await runAuditFix();
     // console.log(fixResult);
 
-    const githubToken = core.getInput("GITHUB_TOKEN");
+    const githubToken = core.getInput("token");
 
     const toolkit = new github.GitHub(githubToken);
 
