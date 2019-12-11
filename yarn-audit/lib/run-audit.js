@@ -1,11 +1,26 @@
 const exec = require("@actions/exec");
 
 let runAudit = async () => {
+  let auditOutput = "";
+
   try {
-    const result = await exec.exec("yarn", ["audit", "--json"]);
+    const options = {};
+    options.listeners = {
+      stdout: data => {
+        auditOutput += data.toString();
+      }
+    };
+
+    await exec.exec("yarn", ["audit", "--json"], options);
+  } catch (error) {
+    //Do nothing. Yarn audit will fail if there is a vulnerability found for some reason.
+  }
+
+  try {
+    // const result = await exec.exec("yarn", ["audit", "--json"]);
     // Try to parse the result as actual JSON
     // const summary = JSON.parse(result.stdout.pop());
-    const data = result.stdout.split("\n");
+    const data = auditOutput.split("\n");
 
     const summary = data.filter(str => {
       if (str.includes("auditSummary")) {
