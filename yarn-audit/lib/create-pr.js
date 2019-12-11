@@ -1,4 +1,4 @@
-const { Toolkit } = require('actions-toolkit')
+const { Toolkit } = require("actions-toolkit");
 const createBody = require("./create-body");
 
 function createList(vulnerabilities) {
@@ -12,16 +12,16 @@ function createList(vulnerabilities) {
  * @param {import('actions-toolkit').Toolkit} param0.tools
  */
 let createPR = async ({ toolkit, vulnerabilities, numVulnerabilities }) => {
-// const tools = new Toolkit()
-    const context = toolkit.context;
+  // const tools = new Toolkit()
+  const context = toolkit.context;
   const newBranch = `audit-fixer-${context.sha.slice(0, 7)}`;
 
   try {
-    await toolkit.git.createRef(
-        ...context.repo,
-        ref: "refs/heads/" + newBranch,
-        sha: context.sha
-    );
+    await toolkit.git.createRef({
+      ...context.repo,
+      ref: "refs/heads/" + newBranch,
+      sha: context.sha
+    });
   } catch (err) {
     // Throw unless the ref already exists
     if (err.status !== 422) throw err;
