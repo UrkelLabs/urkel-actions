@@ -1,5 +1,6 @@
 // const { Toolkit } = require('actions-toolkit')
 const core = require("@actions/core");
+const github = require("@actions/github");
 const runAudit = require("./lib/run-audit");
 const runAuditFix = require("./lib/run-audit-fix");
 const createPR = require("./lib/create-pr");
@@ -15,19 +16,21 @@ async function run() {
     }
 
     const fixResult = await runAuditFix();
+    console.log(fixResult);
+
+    const githubToken = core.getInput("GITHUB_TOKEN");
+
+    const toolkit = new github.GitHub(githubToken);
+
+    await createPR({ toolkit, vulnerabilities, numVulnerabilities });
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
-// .then(async ({ vulnerabilities, numVulnerabilities }) => {
-//   if (numVulnerabilities === 0) {
-//     console.log('No vulnerabilities found!')
-//     return
-//   }
+run();
 
-//   const fixResult = await runAuditFix(tools)
-//   console.log(fixResult)
+// .then(async ({ vulnerabilities, numVulnerabilities }) => {
 
 //   return createPR({
 //     vulnerabilities,
