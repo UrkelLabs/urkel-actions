@@ -11,3 +11,5 @@ let createIssue = async({toolkit, vulnerabilities, numVulnerabilities}) => {
 });
 
 }
+
+module.exports = createIssue;
