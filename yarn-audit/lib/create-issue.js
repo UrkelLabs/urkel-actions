@@ -2,7 +2,7 @@ const github = require("@actions/github");
 const createBody = require("./create-body");
 
 let createIssue = async ({ toolkit, vulnerabilities, numVulnerabilities }) => {
-  const context = github.context;
+  const context = toolkit.context;
 
   return await toolkit.issues.create({
     ...context.repo,
