@@ -9,14 +9,10 @@ LABEL "repository"="https://github.com/UrkelLabs/urkel-actions"
 LABEL "homepage"="https://github.com/UrkelLabs/urkel-actions"
 LABEL "maintainer"="Urkel Labs Engineering <engineering@urkellabs.com>"
 
-RUN apk add --update \
-    python \
-    python-dev \
-    py-pip \
-    build-base \
-  && rm -rf /var/cache/apk/*
+# Install python
+RUN apt update && apt install python2.7 python-pip
 
-  # Upgrade pip
+# Upgrade pip
 RUN pip install --upgrade pip
 
 # Install Octodns
