@@ -28,7 +28,7 @@ module.exports = async ({ tools, vulnerabilities, numVulnerabilities }) => {
   const tree = await tools.github.git.getTree(
     tools.context.repo({ tree_sha: tools.context.sha })
   );
-  const newPackageLockContents = tools.getFile("package-lock.json", "base64");
+  const newPackageLockContents = tools.getFile("yarn.lock", "base64");
 
   await tools.github.repos.updateFile(
     tools.context.repo({
