@@ -1,8 +1,6 @@
 const core = require("@actions/core");
 const exec = require("@actions/exec");
 const github = require("@actions/github");
-const runAudit = require("./lib/run-audit");
-const createIssue = require("./lib/create-issue");
 
 async function run() {
   let dryRunOutput = "";
