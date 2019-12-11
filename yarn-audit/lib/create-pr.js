@@ -22,7 +22,7 @@ module.exports = async ({ tools, vulnerabilities, numVulnerabilities }) => {
     );
   } catch (err) {
     // Throw unless the ref already exists
-    if (err.code !== 422) throw err;
+    if (err.status !== 422) throw err;
   }
 
   const tree = await tools.github.git.getTree(
@@ -32,9 +32,9 @@ module.exports = async ({ tools, vulnerabilities, numVulnerabilities }) => {
 
   await tools.github.repos.updateFile(
     tools.context.repo({
-      path: "package-lock.json",
+      path: "yarn.lock",
       sha: tree.data.tree.find(
-        item => item.path === "package-lock.json" && item.type === "blob"
+        item => item.path === "yarn.lock" && item.type === "blob"
       ).sha,
       message: `Fix ${numVulnerabilities} yarn vulnerabilities\n${createList(
         vulnerabilities
