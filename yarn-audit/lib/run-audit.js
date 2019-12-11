@@ -1,9 +1,8 @@
-module.exports = async tools => {
-  const result = await tools.runInWorkspace("yarn", ["audit", "--json"], {
-    reject: false
-  });
+const exec = require("@actions/exec");
 
+let runAudit = async () => {
   try {
+    const result = await exec.exec("yarn", ["audit", "--json"]);
     // Try to parse the result as actual JSON
     // const summary = JSON.parse(result.stdout.pop());
     const data = result.stdout.split("\n");
@@ -30,3 +29,5 @@ module.exports = async tools => {
     throw err;
   }
 };
+
+module.exports = runAudit;

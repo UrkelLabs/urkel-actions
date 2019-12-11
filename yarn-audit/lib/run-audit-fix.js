@@ -1,17 +1,18 @@
-module.exports = async tools => {
-  const args = ['audit', 'fix', '--force', '--package-lock-only']
-  if (process.env.DRY_RUN) args.push('--dry-run', '--json')
+const exec = require("@actions/exec");
 
-  const result = await tools.runInWorkspace(
-    'yarn',
-    ['audit', '--json'],
-    { reject: false }
-  )
+let runAuditFix = async () => {
+  const args = ["audit", "fix", "--force"];
+
+  // if (process.env.DRY_RUN) args.push('--dry-run', '--json')
+
+  const result = await exec.exec("yarn", args);
 
   if (result.exitCode && result.exitCode !== 0) {
-    const error = result.stderr
-    throw new Error(error)
+    const error = result.stderr;
+    throw new Error(error);
   }
 
-  return result
-}
+  return result;
+};
+
+module.exports = runAuditFix;

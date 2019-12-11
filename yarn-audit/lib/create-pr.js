@@ -1,3 +1,4 @@
+const { Toolkit } = require('actions-toolkit')
 const createBody = require("./create-body");
 
 function createList(vulnerabilities) {
@@ -10,28 +11,29 @@ function createList(vulnerabilities) {
  * @param {Object} param0
  * @param {import('actions-toolkit').Toolkit} param0.tools
  */
-module.exports = async ({ tools, vulnerabilities, numVulnerabilities }) => {
-  const newBranch = `audit-fixer-${tools.context.sha.slice(0, 7)}`;
+let createPR = async ({ toolkit, vulnerabilities, numVulnerabilities }) => {
+// const tools = new Toolkit()
+    const context = toolkit.context;
+  const newBranch = `audit-fixer-${context.sha.slice(0, 7)}`;
 
   try {
-    await tools.github.git.createRef(
-      tools.context.repo({
+    await toolkit.git.createRef(
+        ...context.repo,
         ref: "refs/heads/" + newBranch,
-        sha: tools.context.sha
-      })
+        sha: context.sha
     );
   } catch (err) {
     // Throw unless the ref already exists
     if (err.status !== 422) throw err;
   }
 
-  const tree = await tools.github.git.getTree(
-    tools.context.repo({ tree_sha: tools.context.sha })
+  const tree = await toolkit.git.getTree(
+    context.repo({ tree_sha: context.sha })
   );
   const newPackageLockContents = tools.getFile("yarn.lock", "base64");
 
-  await tools.github.repos.updateFile(
-    tools.context.repo({
+  await toolkit.repos.updateFile(
+    context.repo({
       path: "yarn.lock",
       sha: tree.data.tree.find(
         item => item.path === "yarn.lock" && item.type === "blob"
@@ -44,8 +46,8 @@ module.exports = async ({ tools, vulnerabilities, numVulnerabilities }) => {
     })
   );
 
-  return tools.github.pullRequests.create(
-    tools.context.repo({
+  return toolkit.pullRequests.create(
+    context.repo({
       title: `Automatic audit of yarn vulnerabilities (${numVulnerabilities} fixed)`,
       base: "master",
       head: newBranch,
@@ -53,3 +55,5 @@ module.exports = async ({ tools, vulnerabilities, numVulnerabilities }) => {
     })
   );
 };
+
+module.exports = createPR;
