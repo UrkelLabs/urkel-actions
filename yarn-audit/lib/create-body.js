@@ -1,8 +1,8 @@
 const dedent = require("dedent");
 
 module.exports = (vulnerabilities, total) => {
-  return dedent`### \`yarn audit fix\`
-  A total of **${total} vulnerabilities** have been found and fixed. :rocket:
+  return dedent`### \`yarn audit\`
+  A total of **${total} vulnerabilities** have been found.
 
   | Severity | Count |
   | --- | --- |
