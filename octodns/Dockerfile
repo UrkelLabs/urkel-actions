@@ -10,7 +10,7 @@ LABEL "homepage"="https://github.com/UrkelLabs/urkel-actions"
 LABEL "maintainer"="Urkel Labs Engineering <engineering@urkellabs.com>"
 
 # Install python
-RUN apt update && apt install python2.7 python-pip
+RUN apt update && apt install python2.7 python-pip -y
 
 # Upgrade pip
 RUN pip install --upgrade pip
