@@ -18,17 +18,13 @@ async function run() {
       options
     );
 
-    //No other way I can think of figuring out the changes here....
     const result = dryRunOutput
       .split(
         "********************************************************************************"
       )
-      .pop()
-      .split(
-        "********************************************************************************"
-      )[0];
+      .pop();
 
-    console.log(dryRunOutput);
+    // console.log(dryRunOutput);
     console.log(result);
   } catch (error) {
     core.setFailed(error.message);
