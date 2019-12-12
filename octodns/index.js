@@ -50,9 +50,9 @@ async function deploy() {
 
 async function run() {
   try {
-    const deploy = core.getInput("deploy");
+    const sync = core.getInput("sync");
 
-    if (deploy === true) {
+    if (sync === "deploy") {
       await deploy();
     } else {
       await dryRun();
