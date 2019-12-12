@@ -25,6 +25,7 @@ async function run() {
       .pop();
 
     // console.log(dryRunOutput);
+    console.log("RESULT:");
     console.log(result);
   } catch (error) {
     core.setFailed(error.message);
